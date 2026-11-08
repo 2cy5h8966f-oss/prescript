@@ -134,7 +134,7 @@ let tm,ac,mode="prescripts";
 let st={r:0,c:0,s:0,sec:0};
 try{Object.assign(st,JSON.parse(localStorage.getItem("prescripts-stats")||"{}"))}catch(e){}
 const save=()=>{try{localStorage.setItem("prescripts-stats",JSON.stringify(st))}catch(e){}};
-let lastP={text:"Press the button to receive a prescript.",open:false};
+let lastP={text:"Welcome, Index Proxy",open:false};
 function tick(){
   try{
     ac=ac||new(window.AudioContext||window.webkitAudioContext)();
