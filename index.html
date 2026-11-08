@@ -62,7 +62,17 @@ const conds=["Do not look back.","Do not explain why to anyone.","Use your left 
 "If anyone is nearby, wait until they leave.","Do not speak a word.",
 "Do not rush.","Keep a serious face.","","",""];
 const $=id=>document.getElementById(id);
-let tm;
+let tm,ac;
+function tick(){
+  try{
+    ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+    if(ac.state==="suspended")ac.resume();
+    const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;
+    o.type="square";o.frequency.value=620;
+    g.gain.setValueAtTime(.03,t);
+    o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.03);
+  }catch(e){}
+}
 function type(s){
   clearTimeout(tm);
   const el=$("text");
@@ -78,7 +88,7 @@ function type(s){
       else{out+=G[Math.floor(Math.random()*G.length)];done=false}
     }
     el.textContent=out;f++;
-    if(!done)tm=setTimeout(step,45);
+    if(!done){tick();tm=setTimeout(step,45)}
   })();
 }
 $("gen").onclick=()=>{
